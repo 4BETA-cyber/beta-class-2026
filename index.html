@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class of 2026 - High School Reunion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --secondary: #f7c59f;
+            --accent: #2ec4b6;
+            --accent2: #e71d36;
+            --dark: #1a1a2e;
+            --light: #ffffff;
+            --bg-light: #faf9f6;
+            --gradient1: linear-gradient(135deg, #ff6b35 0%, #f7c59f 100%);
+            --gradient2: linear-gradient(135deg, #2ec4b6 0%, #20a39e 100%);
+            --gradient3: linear-gradient(135deg, #e71d36 0%, #ff6b6b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        body.cinematic-active {
+            overflow: hidden !important;
+        }
+
+        /* Cinematic Intro */
+        .cinematic-intro {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background: var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .cinematic-intro.hidden {
+            animation: cinematicExit 1.5s ease forwards;
+        }
+
+        @keyframes cinematicExit {
+            0% { clip-path: inset(0 0 0 0); }
+            40% { clip-path: inset(0 0 50% 0); }
+            100% { clip-path: inset(100% 0 0 0); }
+        }
+
+        .cinematic-logo {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cinematic-logo h1 {
+            font-size: 6rem;
+            font-weight: 800;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: textReveal 1s ease 0.5s forwards;
+            text-shadow: 0 0 60px rgba(255, 107, 53, 0.5);
+        }
+
+        .cinematic-logo span {
+            display: block;
+            font-size: 3rem;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: textReveal 1s ease 1s forwards;
+        }
+
+        .cinematic-logo p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: textReveal 1s ease 1.5s forwards;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        @keyframes textReveal {
+            0% { opacity: 0; transform: translateY(30px); letter-spacing: 0.5em; }
+            100% { opacity: 1; transform: translateY(0); letter-spacing: 0.1em; }
+        }
+
+        .cinematic-rectangles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cinematic-rect {
+            width: 100%;
+            height: 25%;
+            background: var(--primary);
+            transform-origin: top;
+            animation: rectReveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        .cinematic-rect:nth-child(2) { animation-delay: 0.1s; background: var(--accent); }
+        .cinematic-rect:nth-child(3) { animation-delay: 0.2s; background: var(--accent2); }
+        .cinematic-rect:nth-child(4) { animation-delay: 0.3s; background: var(--secondary); }
+
+        @keyframes rectReveal {
+            0% { transform: scaleY(1); }
+            50% { transform: scaleY(1); }
+            100% { transform: scaleY(0); }
+        }
+
+        .cinematic-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .cinematic-line {
+            position: absolute;
+            background: rgba(255,255,255,0.1);
+            animation: lineScan 3s linear infinite;
+        }
+
+        .cinematic-line:nth-child(1) { top: 20%; width: 100%; height: 2px; animation-delay: 0s; }
+        .cinematic-line:nth-child(2) { top: 40%; width: 100%; height: 1px; animation-delay: 0.5s; }
+        .cinematic-line:nth-child(3) { top: 60%; width: 100%; height: 2px; animation-delay: 1s; }
+        .cinematic-line:nth-child(4) { top: 80%; width: 100%; height: 1px; animation-delay: 1.5s; }
+
+        @keyframes lineScan {
+            0% { transform: translateX(-100%); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%); opacity: 0; }
+        }
+
+        .cinematic-skip {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeIn 0.5s ease 2s forwards;
+            z-index: 10;
+        }
+
+        .cinematic-skip:hover {
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .cinematic-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            50% { opacity: 0.8; }
+            100% { opacity: 0; transform: translateY(-100px) scale(1); }
+        }
+
+        .film-strip {
+            position: absolute;
+            top: 0;
+            width: 30px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 10px,
+                rgba(0,0,0,0.3) 10px,
+                rgba(0,0,0,0.3) 20px
+            );
+            animation: filmStripMove 1s linear infinite;
+        }
+
+        .film-strip.left { left: 0; }
+        .film-strip.right { right: 0; }
+
+        @keyframes filmStripMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(20px); }
+        }
+
+        /* Animated Background */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            bottom: 10%;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent2);
+            top: 50%;
+            right: 20%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -30px) rotate(5deg); }
+            50% { transform: translate(-20px, 20px) rotate(-5deg); }
+            75% { transform: translate(20px, 10px) rotate(3deg); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient1);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(46,196,182,0.1) 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease;
+        }
+
+        .hero h1 span {
+            display: block;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: slideInUp 1s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient1);
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--dark);
+            border: 3px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            background: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient1);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Alumni Grid */
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .name-chip {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .name-chip:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            background: var(--gradient1);
+            color: white;
+        }
+
+        .name-chip:nth-child(3n) { background: var(--gradient2); color: white; }
+        .name-chip:nth-child(3n):hover { background: var(--gradient2); }
+        .name-chip:nth-child(3n+1) { background: var(--gradient3); color: white; }
+        .name-chip:nth-child(3n+1):hover { background: var(--gradient3); }
+
+        .alumni-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .alumni-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .alumni-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alumni-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .alumni-card:hover .alumni-image img {
+            transform: scale(1.1);
+        }
+
+        .alumni-placeholder {
+            font-size: 5rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .alumni-info {
+            padding: 1.5rem;
+        }
+
+        .alumni-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .alumni-role {
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .alumni-details {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item:nth-child(3n+1) { aspect-ratio: 1.2; }
+        .gallery-item:nth-child(5n) { grid-column: span 2; aspect-ratio: 2; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Events Section */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-date {
+            padding: 1.5rem;
+            background: var(--gradient2);
+            color: white;
+            text-align: center;
+        }
+
+        .event-date .day {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .event-date .month {
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            padding: 1.5rem;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-desc {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-link {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        /* First Year Legends */
+        .legends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .legend-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .legend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .legend-card:nth-child(2n) { border-left-color: var(--accent); }
+        .legend-card:nth-child(3n) { border-left-color: var(--accent2); }
+        .legend-card:nth-child(4n) { border-left-color: var(--secondary); }
+
+        .legend-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-icon {
+            font-size: 1.5rem;
+        }
+
+        .legend-quote {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .legend-author {
+            margin-top: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        /* Memory Wall */
+        .memory-wall {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .memory-item {
+            width: calc(25% - 1rem);
+            min-width: 200px;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .memory-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .memory-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .memory-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            padding: 4rem 5%;
+            background: var(--gradient2);
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        .copyright {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .memory-item {
+                width: calc(50% - 1rem);
+            }
+
+            .gallery-item:nth-child(5n) {
+                grid-column: span 1;
+                aspect-ratio: 1;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Cinematic Intro -->
+    <div class="cinematic-intro" id="cinematicIntro">
+        <div class="film-strip left"></div>
+        <div class="film-strip right"></div>
+        <div class="cinematic-lines">
+            <div class="cinematic-line"></div>
+            <div class="cinematic-line"></div>
+            <div class="cinematic-line"></div>
+            <div class="cinematic-line"></div>
+        </div>
+        <div class="cinematic-rectangles">
+            <div class="cinematic-rect"></div>
+            <div class="cinematic-rect"></div>
+            <div class="cinematic-rect"></div>
+            <div class="cinematic-rect"></div>
+        </div>
+        <div class="cinematic-logo">
+            <h1>BETA CLASS</h1>
+            <span>OF 2026</span>
+            <p>THE LEGENDARY BATCH 💪</p>
+        </div>
+        <div class="cinematic-skip" onclick="skipCinematic()">Skip Intro →</div>
+        <div class="cinematic-particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="cinematic-particle" style="left: 20%; animation-delay: 0.3s;"></div>
+        <div class="cinematic-particle" style="left: 35%; animation-delay: 0.6s;"></div>
+        <div class="cinematic-particle" style="left: 50%; animation-delay: 0.9s;"></div>
+        <div class="cinematic-particle" style="left: 65%; animation-delay: 1.2s;"></div>
+        <div class="cinematic-particle" style="left: 80%; animation-delay: 1.5s;"></div>
+        <div class="cinematic-particle" style="left: 90%; animation-delay: 1.8s;"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">Class of 2026</div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#alumni">Classmates</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#legends">Manenoz</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Welcome to<br><span>Class of 2026</span></h1>
+            <p>Our final chapter begins! KCSE starts November 21, 2026. Let's make these last moments count together! 💪</p>
+            <div class="cta-buttons">
+                <a href="#alumni" class="btn btn-primary">Find Classmates</a>
+                <a href="#gallery" class="btn btn-secondary">View Gallery</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">72</div>
+            <div class="stat-label">Classmates</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Years Together</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Memories</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">1</div>
+            <div class="stat-label">KCSE 2026</div>
+        </div>
+    </div>
+
+    <!-- Alumni Section -->
+    <section id="alumni">
+        <div class="section-title fade-in">
+            <h2>CLASS OF 2026 👥</h2>
+            <p>All the legends in one place</p>
+        </div>
+
+        <div class="alumni-grid" id="alumni-grid">
+            <!-- Alumni cards will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" style="background: linear-gradient(135deg, rgba(46,196,182,0.1) 0%, rgba(231,29,54,0.1) 100%);">
+        <div class="section-title fade-in">
+            <h2>Photo Gallery</h2>
+            <p>📸 Click on an image to view full size</p>
+        </div>
+
+        <div class="filters fade-in">
+            <button class="filter-btn active" onclick="filterGallery('all')">All Photos</button>
+            <button class="filter-btn" onclick="filterGallery('class')">Class Photos</button>
+            <button class="filter-btn" onclick="filterGallery('events')">Events</button>
+            <button class="filter-btn" onclick="filterGallery('sports')">Sports Day</button>
+            <button class="filter-btn" onclick="filterGallery('parties')">Parties</button>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Gallery items will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- First Year Legends -->
+    <section id="legends" style="background: linear-gradient(135deg, rgba(231,29,54,0.1) 0%, rgba(255,107,53,0.1) 100%);">
+        <div class="section-title fade-in">
+            <h2>HIGH SCHOOL MANENOZ 🔥</h2>
+            <p>The iconic moments that defined our high school years</p>
+            <p style="margin-top: 1rem; color: var(--accent); font-weight: 600;">📚 Class Teacher: Annette → Kessio</p>
+        </div>
+
+        <div class="legends-grid" id="legends-grid">
+            <!-- Legends will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" style="background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(46,196,182,0.1) 100%);">
+        <div class="section-title fade-in">
+            <h2>21 NOVEMBER 2026 🫡</h2>
+            <p>KCSE STARTS</p>
+        </div>
+
+        <div id="countdown" style="text-align: center; margin: 2rem auto; max-width: 600px;">
+            <div style="font-size: 1.2rem; color: #666; margin-bottom: 1rem;">DAYS REMAINING</div>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <div style="background: var(--gradient1); color: white; padding: 1.5rem 2rem; border-radius: 15px; min-width: 100px;">
+                    <div id="days" style="font-size: 3rem; font-weight: 800;">0</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">Days</div>
+                </div>
+                <div style="background: var(--gradient2); color: white; padding: 1.5rem 2rem; border-radius: 15px; min-width: 100px;">
+                    <div id="hours" style="font-size: 3rem; font-weight: 800;">0</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">Hours</div>
+                </div>
+                <div style="background: var(--gradient3); color: white; padding: 1.5rem 2rem; border-radius: 15px; min-width: 100px;">
+                    <div id="minutes" style="font-size: 3rem; font-weight: 800;">0</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">Minutes</div>
+                </div>
+                <div style="background: var(--dark); color: white; padding: 1.5rem 2rem; border-radius: 15px; min-width: 100px;">
+                    <div id="seconds" style="font-size: 3rem; font-weight: 800;">0</div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">Seconds</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="events-grid" id="events-grid">
+            <!-- Events will be generated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="section-title fade-in">
+            <h2>Get in Touch</h2>
+            <p>Have questions or want to volunteer? Reach out!</p>
+        </div>
+
+        <div class="contact-container fade-in">
+            <form onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select required>
+                        <option value="">Select a topic</option>
+                        <option value="reunion">Reunion Planning</option>
+                        <option value="gallery">Photo Contributions</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea rows="5" placeholder="Your message..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">Class of 2026</div>
+        <div style="margin: 1rem 0; color: var(--primary); font-weight: 600;">
+            CONTACT THE CREATOR:
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <div>NAME: MARK COLLINS</div>
+            <div>NO: 0785918208</div>
+        </div>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#alumni">Classmates</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#events">Events</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div style="margin-top: 1.5rem; font-size: 2rem; font-weight: 800; color: var(--primary);">
+            MCK ✍️
+        </div>
+        <p class="copyright">© 2026 Class of 2026. All rights reserved.<br>Designed with ❤️ by MCK</p>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        // Sample Data - Class of 2026 Members
+        const alumni = [
+            { name: "Niko 👔", stream: "science" },
+            { name: "MCK 🎹", stream: "arts" },
+            { name: "Mesh 🥅", stream: "sports" },
+            { name: "Mibei 🚬", stream: "commerce" },
+            { name: "Baro ⚽", stream: "sports" },
+            { name: "Lugom", stream: "science" },
+            { name: "Pablo 📵", stream: "science" },
+            { name: "Chui", stream: "science" },
+            { name: "Manu", stream: "science" },
+            { name: "Lewa", stream: "science" },
+            { name: "Stano", stream: "science" },
+            { name: "Lincoln", stream: "science" },
+            { name: "Eram 👔", stream: "science" },
+            { name: "KDB ⚽", stream: "sports" },
+            { name: "Anode", stream: "science" },
+            { name: "Onsare", stream: "science" },
+            { name: "Sut ⚫", stream: "arts" },
+            { name: "Alvo", stream: "science" },
+            { name: "Wayne", stream: "science" },
+            { name: "Makan 🍟", stream: "commerce" },
+            { name: "Ondieki", stream: "science" },
+            { name: "Barry", stream: "arts" },
+            { name: "Wambua 🥁", stream: "arts" },
+            { name: "Mark", stream: "commerce" },
+            { name: "Glodiee 🏐", stream: "sports" },
+            { name: "Cpt.Simiyu 🛬", stream: "sports" },
+            { name: "Muasya", stream: "science" },
+            { name: "Anko (Muiga)", stream: "science" },
+            { name: "Bitange 🏗️🚧", stream: "science" },
+            { name: "Jediel", stream: "science" },
+            { name: "Tedy", stream: "science" },
+            { name: "Jared 💩", stream: "commerce" },
+            { name: "Githu ⛪", stream: "arts" },
+            { name: "Cliff 🏆", stream: "science" },
+            { name: "Iansam 📺", stream: "arts" },
+            { name: "Mibei", stream: "science" },
+            { name: "Omera 💪", stream: "commerce" },
+            { name: "Willy", stream: "science" },
+            { name: "Myles ⚫", stream: "arts" },
+            { name: "Inyash", stream: "science" },
+            { name: "Deno 🤸", stream: "arts" },
+            { name: "Ole Kisotu 🛡️", stream: "science" },
+            { name: "Kiptum", stream: "science" },
+            { name: "Keith", stream: "science" },
+            { name: "Seba 🚬", stream: "commerce" },
+            { name: "Moha 📱", stream: "commerce" },
+            { name: "Abdi 🥷", stream: "sports" },
+            { name: "Obazi 💨", stream: "sports" },
+            { name: "Bobo", stream: "science" },
+            { name: "Bashir", stream: "science" },
+            { name: "Mang'ula 🤓", stream: "science" },
+            { name: "Tito 🦀", stream: "commerce" },
+            { name: "Goduu", stream: "science" },
+            { name: "Carson ⚽", stream: "sports" },
+            { name: "Duller 🥜", stream: "arts" },
+            { name: "Collo white", stream: "science" },
+            { name: "Tobi", stream: "science" },
+            { name: "Tikeens", stream: "science" },
+            { name: "Mogy", stream: "science" },
+            { name: "Obaga", stream: "science" },
+            { name: "Mutembei 😋", stream: "commerce" },
+            { name: "Lameck", stream: "science" },
+            { name: "Herman", stream: "science" },
+            { name: "Rhodes", stream: "arts" },
+            { name: "Matoo 👔", stream: "science" },
+            { name: "Collo black", stream: "commerce" }
+        ];
+
+        const gallery = [
+            { category: "class", title: "Photo 1", src: "images/photo16.png" },
+            { category: "class", title: "Photo 2", src: "images/photo17.png" },
+            { category: "class", title: "Photo 3", src: "images/photo18.png" },
+            { category: "class", title: "Photo 4", src: "images/photo19.png" },
+            { category: "class", title: "Photo 5", src: "images/photo20.png" },
+            { category: "class", title: "Photo 6", src: "images/photo21.png" },
+            { category: "class", title: "Photo 7", src: "images/photo22.png" },
+            { category: "class", title: "Photo 8", src: "images/photo23.png" },
+            { category: "class", title: "Photo 9", src: "images/photo24.png" },
+            { category: "class", title: "Photo 10", src: "images/photo25.png" },
+            { category: "class", title: "Photo 11", src: "images/photo26.png" },
+            { category: "class", title: "Photo 12", src: "images/photo27.png" }
+        ];
+
+        const legends = [
+            { title: "Rojo za Niko", quote: "Rojo za Niko (MCA)", icon: "🎭" },
+            { title: "1st Person Funky", quote: "1st person kuenda funky --Masta 🫡", icon: "🕺" },
+            { title: "Inyangala TP", quote: "Inyangala kulinga TP na paper jet, kijanaa aka 😭", icon: "🤡" },
+            { title: "UEFA nyuma daro", quote: "UEFA nyuma ya daro, MCK ⚽", icon: "⚽" },
+            { title: "Corridor Kunyeshea", quote: "Kunyeshea wasee kwa corridor ya resource 😂", icon: "🚶" },
+            { title: "MCK kukatwa", quote: "MCK kukatwa na tito 🦀", icon: "🦀" },
+            { title: "Obazi Ball", quote: "Obazi 💨 kuwai bulb na ball", icon: "💡" },
+            { title: "Sunday Service", quote: "Sunday after service kumalizia entaa", icon: "🏠" },
+            { title: "Simsim Clap", quote: "Simsim na duller kuclap peanut ya Masta 👀👀", icon: "🥜" },
+            { title: "Moha Number", quote: "Moha kuwaiwa na number moja 😂😂", icon: "📱" },
+            { title: "Godwin Answers", quote: "Godwin kujibu maswali zote back in his prime 🤓", icon: "🤓" },
+            { title: "iansam TV", quote: "iansam kuzima TV, teacher pet 🐶", icon: "📺" },
+            { title: "Kisotu Check Book", quote: "Kisotu kuwa kwa list zote za chui za kucheck book after lesson, iza jooh 😂", icon: "📋" },
+            { title: "Dorm Cleaning", quote: "Cleaning ya dorm area from 4:45 – 9:00 😌", icon: "🧹" },
+            { title: "Sunday Service", quote: "Service on Sunday – 8:00am ⛪", icon: "⛪" },
+            { title: "QASO Seba", quote: "QASO, seba 🏠🏠", icon: "🛖" },
+            { title: "Cliff Top 10", quote: "Cliff – Top 10 pale tie test, mwenyeji 😂", icon: "🏆" },
+            { title: "Carson ACP", quote: "Carson – The Assistant Class Prefect 🤦‍♀️", icon: "👔" },
+            { title: "Baro UEFA", quote: "Baro kushine UEFA pale koitalel 🫡✨", icon: "✨" },
+            { title: "Budangu Makan", quote: "\"Budangu alisema........\"Makan once said 🤣😅..btw 🍟🍟", icon: "🍟" },
+            { title: "Mogere Jared", quote: "Mogere kukata Jared, \"that my mother!😭\"", icon: "😱" },
+            { title: "Scenes DH", quote: "Scenes pale DH, Inyangala 🤣🤣", icon: "🎬" },
+            { title: "Environment Jump", quote: "Kuruka kutoka 1st floor resource, akina environment 😊", icon: "🏢" }
+        ];
+
+        const memories = [
+            { year: "2023", caption: "Freshman Year - First Day" },
+            { year: "2024", caption: "Sports Day Victory" },
+            { year: "2024", caption: "Science Fair Winners" },
+            { year: "2025", caption: "Prom Night Magic" },
+            { year: "2025", caption: "Graduation Eve" },
+            { year: "2026", caption: "The Final Goodbye" }
+        ];
+
+        const events = [
+            { day: "21", month: "NOV", title: "KCSE STARTS 🫡", desc: "May God be with us! All the best Class of 2026! 💪" }
+        ];
+
+        // Generate Alumni Cards
+        function generateAlumniCards(filter = 'all') {
+            const grid = document.getElementById('alumni-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? alumni : alumni.filter(a => a.stream === filter);
+            
+            filtered.forEach((person, index) => {
+                grid.innerHTML += `
+                    <div class="name-chip fade-in" style="animation-delay: ${index * 0.05}s">
+                        ${person.name}
+                    </div>
+                `;
+            });
+
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        // Filter Alumni
+        function filterAlumni(filter) {
+            document.querySelectorAll('.filters .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            generateAlumniCards(filter);
+        }
+
+        // Generate Gallery
+        function generateGallery(filter = 'all') {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            
+            const filtered = filter === 'all' ? gallery : gallery.filter(g => g.category === filter);
+            
+filtered.forEach((photo, index) => {
+                const imgSrc = photo.src || '';
+                grid.innerHTML += `
+                    <div class="gallery-item fade-in" style="animation-delay: ${index * 0.1}s;" onclick="openLightbox('${imgSrc}')">
+                        <img src="${imgSrc}" alt="${photo.title}" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                        <div class="alumni-placeholder" style="font-size: 3rem;display:none;">📷</div>
+                        <div class="gallery-overlay">
+                            <div class="gallery-title">${photo.title}</div>
+                            <div class="gallery-caption">${photo.caption}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+            }, 100);
+        }
+
+        // Filter Gallery
+        function filterGallery(filter) {
+            document.querySelectorAll('#gallery .filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            generateGallery(filter);
+        }
+
+        // Generate 1st Year Legends
+        function generateLegends() {
+            const grid = document.getElementById('legends-grid');
+            legends.forEach((legend, index) => {
+                grid.innerHTML += `
+                    <div class="legend-card fade-in" style="animation-delay: ${index * 0.1}s">
+                        <div class="legend-title">
+                            <span class="legend-icon">${legend.icon}</span>
+                            ${legend.title}
+                        </div>
+                        <div class="legend-quote">"${legend.quote}"</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Generate Memory Wall
+        function generateMemories() {
+            const wall = document.getElementById('memory-wall');
+            memories.forEach((memory, index) => {
+                wall.innerHTML += `
+                    <div class="memory-item fade-in" style="animation-delay: ${index * 0.1}s" onclick="openLightbox('https://picsum.photos/400/400?random=${index + 20}')">
+                        <div class="alumni-placeholder" style="font-size: 3rem;">🕐</div>
+                        <div class="memory-caption">${memory.caption}</div>
+                    </div>
+                `;
+            });
+        }
+
+        // Generate Events
+        function generateEvents() {
+            const grid = document.getElementById('events-grid');
+            events.forEach((event, index) => {
+                grid.innerHTML += `
+                    <div class="event-card fade-in" style="animation-delay: ${index * 0.1}s">
+                        <div class="event-date">
+                            <div class="day">${event.day}</div>
+                            <div class="month">${event.month}</div>
+                        </div>
+                        <div class="event-details">
+                            <div class="event-title">${event.title}</div>
+                            <div class="event-desc">${event.desc}</div>
+                            <a href="#" class="event-link">Register Now →</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Lightbox
+        function openLightbox(src) {
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox-img').src = src;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Form Submit
+        function submitForm(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            e.target.reset();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            generateAlumniCards();
+            generateGallery();
+            generateLegends();
+            generateEvents();
+
+            // Countdown to 21 November 2026
+            const kcseDate = new Date('2026-11-21T00:00:00').getTime();
+            const countdownInterval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = kcseDate - now;
+                
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('countdown').innerHTML = '<div style="font-size: 2rem; font-weight: 800; color: var(--primary);">KCSE HAS STARTED! 🫡</div>';
+                    return;
+                }
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }, 1000);
+
+            // Scroll Animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        });
+
+        // Close lightbox on click outside
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lightbox')) {
+                closeLightbox();
+            }
+        });
+
+        // Cinematic Intro
+        setTimeout(() => {
+            document.body.classList.add('cinematic-active');
+        }, 50);
+
+        function skipCinematic() {
+            const intro = document.getElementById('cinematicIntro');
+            intro.classList.add('hidden');
+            document.body.classList.remove('cinematic-active');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === ' ') {
+                skipCinematic();
+            }
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                skipCinematic();
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
